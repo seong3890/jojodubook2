@@ -1,0 +1,35 @@
+spring:
+  datasource:
+#    url: jdbc:h2:mem:localdb
+    url: jdbc:h2:tcp://localhost/~/localdb3
+#    url: jdbc:h2:~/localdb2
+    username: sa
+    password:
+#    url: jdbc:h2:file:C:/dev/data/localdb
+    driver-class-name: org.h2.Driver
+
+
+  jpa:
+
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 1000 #최적화 옵션
+    open-in-view: false
+    database: h2
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 200
+#  h2:
+#    console:
+#      path: /h2-console
+#      enabled: true
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
+

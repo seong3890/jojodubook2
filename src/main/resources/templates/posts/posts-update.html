@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-md-4">
+    <form th:object="${posts}">
+        <div class="form-group">
+            <label  th:field="*{id}">글번호</label>
+            <input type="text" th:field="*{id}" class="form-control" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="title" th:field="*{title}">제목</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label th:field="*{author}">작성자</label>
+            <input type="text" th:field="*{author}"  class="form-control" readonly>
+        </div>
+
+        <div class="form-group">
+            <label  th:field="*{content}">내용</label>
+            <textarea th:field="*{content}" id="content" class="form-control"></textarea>
+        </div>
+    </form>
+    <a href="/" role="button" class="btn-secondary">취소</a>
+    <button type="button" class="btn-primary" onclick="update()">수정완료</button>
+    <button type="button" class="btn-primary" onclick="del()">삭제</button>
+</div>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+<script>
+    function update() {
+        var data={
+            title: $("#title").val(),
+            content: $("#content").val()
+        };
+         var id = $("#id").val();
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/v1/posts/"+id,
+            dataType: "json",
+            contentType: "application/json; utf-8",
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert('글이 수정되었습니다');
+            window.location.href = '/';
+        }).fail(function (e) {
+            alert(JSON.stringify(e));
+        });
+    }
+
+    function del() {
+        var id = $("#id").val();
+
+        $.ajax({
+                type: "DELETE",
+                url: "/api/v1/posts/"+id,
+                dataType: "json",
+                contentType: "application/json; utf-8",
+            }).done(function () {
+                alert('글이 삭제되었습니다');
+                window.location.href = '/';
+            }).fail(function (e) {
+                alert(JSON.stringify(e));
+            });
+
+    }
+
+</script>
+
+</html>
