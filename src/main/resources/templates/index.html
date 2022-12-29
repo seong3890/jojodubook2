@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header">
+    <meta charset="UTF-8">
+    <title>스프링 부트로 시작하는 웹페이지</title>
+</head>
+<body>
+<h1>스프링 부트로 시작하는 웹서비스</h1>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <a th:href="@{/posts/save}" role="button" class="btn btn-primary">글 등록</a>
+        </div>
+    </div>
+    <hr>
+    <!--목록 출력 영역-->
+    <table class="table table-primary table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th>게시글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>최종수정일</th>
+        </tr>
+        </thead>
+        <tr>
+            <tbody class="text-body" id="tbody">
+            <tr th:each="post:${posts}">
+                <td th:text="${post.id}"></td>
+                <td><a th:text="${post.title}" th:href="@{/posts/update/{id}(id=${post.id})}"></a></td>
+                <td th:text="${post.author}"></td>
+                <td th:text="${post.modifiedDate}"></td>
+            </tr>
+            </tbody>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>
